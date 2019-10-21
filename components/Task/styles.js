@@ -35,10 +35,19 @@ export default styles = StyleSheet.create({
     textDecorationColor: '#636e72',
     textDecorationLine: 'line-through'
   },
+  taskEdit: {
+    marginRight: 5,
+  },
   componentPaddingLeft: {
     paddingLeft: 20
   },
   componentPaddingRight: {
     paddingRight: 20
   },
+  addTypeInput: {
+    height: 50,
+    fontSize: 20,
+    borderBottomWidth: 2,
+    borderBottomColor: '#303030',
+  }
 })

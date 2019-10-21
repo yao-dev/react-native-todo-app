@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FlatList, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
-import { connect } from 'react-redux';
 import AddModal from '../AddModal';
 import Task from '../Task';
+import container from './container';
 import styles from './styles';
 
 const CategoryCard = (props) => {
@@ -23,6 +23,7 @@ const CategoryCard = (props) => {
       {/* BODY */}
       <FlatList
         data={props.tasks}
+        keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => {
           return (
             <Task
@@ -52,12 +53,4 @@ const CategoryCard = (props) => {
   )
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    tasks: state.tasks.filter(i => i.categoryId === ownProps.id)
-  }
-}
-
-export default connect(
-  mapStateToProps,
-)(CategoryCard)
+export default container(CategoryCard)

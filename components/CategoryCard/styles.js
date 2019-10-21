@@ -5,7 +5,7 @@ const { width } = Dimensions.get('window');
 export default styles = StyleSheet.create({
   container: {
     justifyContent: 'space-between',
-    height: 450,
+    height: '69%',
     width: width - 80,
     backgroundColor: '#FFF',
     marginRight: 20,

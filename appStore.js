@@ -9,6 +9,9 @@ export const initialState = {
   categories: [{
     id: 1,
     name: 'test'
+  }, {
+    id: 2,
+    name: 'test'
   }]
 }
 
@@ -17,10 +20,6 @@ export const reset = () => initialState;
 const reducer = (state, action) => {
   switch (action.type) {
     case 'ADD_TASK':
-      // console.log([
-      //   ...state.tasks,
-      //   action.payload
-      // ])
       return {
         ...state,
         tasks: [
@@ -28,13 +27,36 @@ const reducer = (state, action) => {
           action.payload
         ]
       }
+    case 'UPDATE_TASK':
+        console.log(action.payload)
+      return {
+        ...state,
+        tasks: state.tasks.map((task) => {
+          if (task.id === action.payload.id) {
+            return {
+              ...task,
+              name: action.payload.name,
+              categoryId: action.payload.categoryId,
+            }
+          }
+          return task;
+        })
+      }
     case 'DELETE_TASK':
-      return state;
+      return {
+        ...state,
+        tasks: state.tasks.filter((task) => {
+          if (task.id !== action.payload.id) {
+            return task;
+          }
+        })
+      };
     case 'ADD_CATEGORY':
       // console.log([
       //   ...state.categories,
       //   action.payload
       // ])
+      console.log(action.payload)
       return {
         ...state,
         categories: [
