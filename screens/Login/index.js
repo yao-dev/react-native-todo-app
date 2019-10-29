@@ -14,11 +14,19 @@ export default Login = (props) => {
   const [passwordError, setPasswordError] = useState('');
   const [formError, setFormError] = useState('');
 
-  const signin = () => {
-    if (!email.trim().length) setEmailError('The field is required');
-    if (!password.length) setPasswordError('The field is required');
+  const getFieldsError = () => {
+    let error = {}
+    if (!email.trim().length) error.email = 'The field is required';
+    if (!password.length) error.password = 'The field is required';
 
-    if (emailError || passwordError) return;
+    if (error.email) setEmailError(error.email);
+    if (error.password) setPasswordError(error.password);
+
+    return Object.keys(error).length ? error : false;
+  }
+
+  const signin = () => {
+    if (getFieldsError()) return;
 
     setLoading(true)
     signinWithEmailAndPassword({
