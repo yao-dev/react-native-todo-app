@@ -1,10 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { signinWithEmailAndPassword } from '../../common/firebase';
 import globalStyles from '../../common/globalStyles';
 import Button from '../../components/Button';
+import Form from '../../components/Form';
 import Input from '../../components/Input';
 
 export default Login = (props) => {
+  const [isLoading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+  const [formError, setFormError] = useState('');
+
+  const signin = () => {
+    if (!email.trim().length) setEmailError('The field is required');
+    if (!password.length) setPasswordError('The field is required');
+
+    if (emailError || passwordError) return;
+
+    setLoading(true)
+    signinWithEmailAndPassword({
+      email,
+      password,
+      onSuccess: () => {
+        setLoading(false);
+        setEmail('');
+        setPassword('');
+        props.navigation.navigate('Home')
+      },
+      onError: () => {
+        setLoading(false)
+        setFormError('There is an error')
+      },
+    })
+  }
+
   const createAccountLinkProps = {
     style: styles.createAccountLink,
     suppressHighlighting: true,
@@ -25,27 +57,47 @@ export default Login = (props) => {
         </Text>
 
         {/* INPUTS */}
-        <View>
-          {/* USERNAME */}
+        <Form formError={formError}>
+          {/* EMAIL */}
           <Input
-            placeholder='Username'
-            iconModule='Feather'
-            iconName='user'
-            iconPosition='left'
-            containerStyle={styles.containerInput}
+            placeholder='Email'
+            value={email}
+            onChangeText={setEmail}
+            autoCapitalize='none'
+            autoCorrect={false}
+            keyboardType='email-address'
+            onFocus={() => {
+              setEmailError('');
+              setFormError('');
+            }}
             style={styles.input}
+            iconModule='MaterialCommunityIcons'
+            iconName='email-outline'
+            iconPosition='left'
+            errorText={emailError}
+            containerStyle={styles.containerInput}
           />
 
           {/* PASSWORD */}
           <Input
             placeholder='Password'
+            value={password}
+            onChangeText={setPassword}
+            onSubmitEditing={signin}
+            returnKeyType='go'
+            onFocus={() => {
+              setPasswordError('');
+              setFormError('');
+            }}
+            secureTextEntry
+            style={styles.input}
             iconModule='Feather'
             iconName='lock'
             iconPosition='left'
             containerStyle={styles.containerInput}
-            style={styles.input}
+            errorText={passwordError}
           />
-        </View>
+        </Form>
 
         {/* SUBMIT */}
         <Button
@@ -54,7 +106,8 @@ export default Login = (props) => {
           shadowColor='blue'
           large
           containerStyle={styles.containerButton}
-          onPress={() => props.navigation.navigate('Home')}
+          isLoading={isLoading}
+          onPress={signin}
         >
           LOGIN
         </Button>
@@ -107,6 +160,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   body: {
+    marginTop: globalStyles.marginTop,
     marginHorizontal: 40
   },
   title: {

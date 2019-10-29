@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
 import { iconDirectory } from '../../common/constants';
 
@@ -11,10 +11,9 @@ export default Button = ({
   onPress = () => true,
   ...props
 }) => {
-  const [isLoading, setLoading] = useState(false)
   const Icon = iconDirectory[iconModule];
   const renderChildren = () => {
-    if (isLoading) return <ActivityIndicator size='small' color={props.color} />;
+    if (props.isLoading) return <ActivityIndicator size='small' color={props.color} />;
 
     return (
       <>
@@ -50,13 +49,7 @@ export default Button = ({
 
   return (
     <TouchableOpacity
-      onPress={() => {
-        setLoading(true)
-        setTimeout(() => {
-          onPress()
-          setLoading(false)
-        }, 2000)
-      }}
+      onPress={onPress}
       style={{
         justifyContent: 'center',
         alignItems: 'center',

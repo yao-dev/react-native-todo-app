@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { signupWithEmailAndPassword } from '../../common/firebase';
 import globalStyles from '../../common/globalStyles';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 
+
 export default Signup = (props) => {
+  const [isLoading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const createAccountLinkProps = {
     style: styles.createAccountLink,
@@ -35,22 +37,11 @@ export default Signup = (props) => {
             value={email}
             onChangeText={setEmail}
             autoCapitalize='none'
+            autoCorrect={false}
             keyboardType='email-address'
             style={styles.input}
             iconModule='MaterialCommunityIcons'
             iconName='email-outline'
-            iconPosition='left'
-            containerStyle={styles.containerInput}
-          />
-          {/* USERNAME */}
-          <Input
-            placeholder='Username'
-            value={username}
-            onChangeText={setUsername}
-            autoCapitalize='none'
-            style={styles.input}
-            iconModule='Feather'
-            iconName='user'
             iconPosition='left'
             containerStyle={styles.containerInput}
           />
@@ -60,7 +51,20 @@ export default Signup = (props) => {
             placeholder='Password'
             value={password}
             onChangeText={setPassword}
-            onSubmitEditing={() => props.navigation.navigate('Home')}
+            onSubmitEditing={() => {
+              setLoading(true)
+              signupWithEmailAndPassword({
+                email,
+                password,
+                onSuccess: () => {
+                  setLoading(false)
+                  setEmail('');
+                  setPassword('');
+                  props.navigation.navigate('Home')
+                },
+                onError: () => setLoading(false),
+              })
+            }}
             returnKeyType='go'
             secureTextEntry
             style={styles.input}
@@ -78,7 +82,21 @@ export default Signup = (props) => {
           shadowColor='blue'
           large
           containerStyle={styles.containerButton}
-          onPress={() => props.navigation.navigate('Home')}
+          isLoading={isLoading}
+          onPress={() => {
+            setLoading(true)
+            signupWithEmailAndPassword({
+              email,
+              password,
+              onSuccess: () => {
+                setLoading(false)
+                setEmail('');
+                setPassword('');
+                props.navigation.navigate('Home')
+              },
+              onError: () => setLoading(false),
+            })
+          }}
         >
           CREATE MY ACCOUNT
         </Button>
@@ -131,6 +149,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   body: {
+    marginTop: globalStyles.marginTop,
     marginHorizontal: 40
   },
   title: {
