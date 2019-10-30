@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Keyboard, Text, TouchableOpacity, View } from 'react-native';
 import { iconDirectory } from '../../common/constants';
 
 export default Button = ({
@@ -17,16 +17,13 @@ export default Button = ({
 
     return (
       <>
-        {iconName && !iconPosition && (
+        {/* LEFT ICON */}
+        {iconName && iconPosition === 'left' || iconName && !iconPosition && (
           <View style={{ }}>
             <Icon name={iconName} size={20} color={iconColor} />
           </View>
         )}
-        {iconName && iconPosition === 'left' && (
-          <View style={{ }}>
-            <Icon name={iconName} size={20} color={iconColor} />
-          </View>
-        )}
+        {/* BUTTON TEXT */}
         {typeof props.children === 'string' && (
           <Text
             style={{
@@ -38,6 +35,7 @@ export default Button = ({
             {props.children}
           </Text>
         )}
+        {/* RIGHT ICON */}
         {iconName && iconPosition === 'left' && (
           <View style={{ }}>
             <Icon name={iconName} size={20} color={iconColor} />
@@ -49,7 +47,10 @@ export default Button = ({
 
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={() => {
+        Keyboard.dismiss()
+        onPress()
+      }}
       style={{
         justifyContent: 'center',
         alignItems: 'center',

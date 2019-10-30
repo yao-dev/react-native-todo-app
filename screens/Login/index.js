@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Image, KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { signinWithEmailAndPassword } from '../../common/firebase';
 import globalStyles from '../../common/globalStyles';
 import Button from '../../components/Button';
@@ -53,112 +53,116 @@ export default Login = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* BODY */}
-      <View style={styles.body}>
-        <Image style={{ width: '100%', height: 250 }} source={require('../../assets/login.png')} />
-        {/* TITLE */}
-        <Text style={styles.title}>
-          Login
-        </Text>
-        <Text style={styles.createAccountText}>
-          Don't have an account? <Text {...createAccountLinkProps}>Create your account</Text>
-        </Text>
+      <ScrollView keyboardShouldPersistTaps='handled'>
+        <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={20}>
+          {/* BODY */}
+          <View style={styles.body}>
+            <Image style={{ width: '100%', height: 250 }} source={require('../../assets/login.png')} />
+            {/* TITLE */}
+            <Text style={styles.title}>
+              Login
+            </Text>
+            <Text style={styles.createAccountText}>
+              Don't have an account? <Text {...createAccountLinkProps}>Create your account</Text>
+            </Text>
 
-        {/* INPUTS */}
-        <Form formError={formError}>
-          {/* EMAIL */}
-          <Input
-            placeholder='Email'
-            value={email}
-            onChangeText={setEmail}
-            autoCapitalize='none'
-            autoCorrect={false}
-            keyboardType='email-address'
-            onFocus={() => {
-              setEmailError('');
-              setFormError('');
-            }}
-            style={styles.input}
-            iconModule='MaterialCommunityIcons'
-            iconName='email-outline'
-            iconPosition='left'
-            errorText={emailError}
-            containerStyle={styles.containerInput}
-          />
+            {/* INPUTS */}
+            <Form formError={formError}>
+              {/* EMAIL */}
+              <Input
+                placeholder='Email'
+                value={email}
+                onChangeText={setEmail}
+                autoCapitalize='none'
+                autoCorrect={false}
+                keyboardType='email-address'
+                onFocus={() => {
+                  setEmailError('');
+                  setFormError('');
+                }}
+                style={styles.input}
+                iconModule='MaterialCommunityIcons'
+                iconName='email-outline'
+                iconPosition='left'
+                errorText={emailError}
+                containerStyle={styles.containerInput}
+              />
 
-          {/* PASSWORD */}
-          <Input
-            placeholder='Password'
-            value={password}
-            onChangeText={setPassword}
-            onSubmitEditing={signin}
-            returnKeyType='go'
-            onFocus={() => {
-              setPasswordError('');
-              setFormError('');
-            }}
-            secureTextEntry
-            style={styles.input}
-            iconModule='Feather'
-            iconName='lock'
-            iconPosition='left'
-            containerStyle={styles.containerInput}
-            errorText={passwordError}
-          />
-        </Form>
+              {/* PASSWORD */}
+              <Input
+                placeholder='Password'
+                value={password}
+                onChangeText={setPassword}
+                onSubmitEditing={signin}
+                returnKeyType='go'
+                onFocus={() => {
+                  setPasswordError('');
+                  setFormError('');
+                }}
+                secureTextEntry
+                style={styles.input}
+                iconModule='Feather'
+                iconName='lock'
+                iconPosition='left'
+                containerStyle={styles.containerInput}
+                errorText={passwordError}
+              />
+            </Form>
 
-        {/* SUBMIT */}
-        <Button
-          backgroundColor='blue'
-          color='#FFF'
-          shadowColor='blue'
-          large
-          containerStyle={styles.containerButton}
-          isLoading={isLoading}
-          onPress={signin}
-        >
-          LOGIN
-        </Button>
+            {/* SUBMIT */}
+            <Button
+              backgroundColor='blue'
+              color='#FFF'
+              shadowColor='blue'
+              large
+              containerStyle={styles.containerButton}
+              isLoading={isLoading}
+              onPress={signin}
+            >
+              LOGIN
+            </Button>
 
-        {/* LOGIN OPTIONS TEXT */}
-        <Text style={styles.loginOptionsText}>
-          Or Login with
-        </Text>
+            {/* LOGIN OPTIONS TEXT */}
+            <Text style={styles.loginOptionsText}>
+              Or Login with
+            </Text>
 
-        {/* LOGIN OPTIONS */}
-        <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-          {/* FACEBOOK */}
-          <Button
-            backgroundColor='#273c75'
-            color='#FFF'
-            shadowColor='grey'
-            containerStyle={{ marginRight: 10}}
-            iconModule='MaterialCommunityIcons'
-            iconName='facebook'
-            iconColor='#FFF'
-          />
-          {/* TWITTER */}
-          <Button
-            backgroundColor='#00a8ff'
-            color='#FFF'
-            shadowColor='grey'
-            containerStyle={{ marginRight: 10}}
-            iconModule='MaterialCommunityIcons'
-            iconName='twitter'
-            iconColor='#FFF'
-          />
-          {/* GOOGLE+ */}
-          <Button
-            backgroundColor='#e84118'
-            color='#FFF'
-            shadowColor='grey'
-            containerStyle={{}}
-            iconModule='Ionicons'
-            iconName='logo-googleplus'
-            iconColor='#FFF'
-          />
-        </View>
-      </View>
+            {/* LOGIN OPTIONS */}
+            <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
+              {/* FACEBOOK */}
+              <Button
+                backgroundColor='#273c75'
+                color='#FFF'
+                shadowColor='grey'
+                containerStyle={{ marginRight: 10}}
+                iconModule='MaterialCommunityIcons'
+                iconName='facebook'
+                iconColor='#FFF'
+              />
+              {/* TWITTER */}
+              <Button
+                backgroundColor='#00a8ff'
+                color='#FFF'
+                shadowColor='grey'
+                containerStyle={{ marginRight: 10}}
+                iconModule='MaterialCommunityIcons'
+                iconName='twitter'
+                iconColor='#FFF'
+              />
+              {/* GOOGLE+ */}
+              <Button
+                backgroundColor='#e84118'
+                color='#FFF'
+                shadowColor='grey'
+                containerStyle={{}}
+                iconModule='Ionicons'
+                iconName='logo-googleplus'
+                iconColor='#FFF'
+              />
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </ScrollView>
     </SafeAreaView>
   );
 }
