@@ -26,4 +26,30 @@ export const signinWithEmailAndPassword = async (data = {}) => {
   }
 }
 
+export const getUser = () => {
+  return firebase.auth().onAuthStateChanged((user) => user)
+}
+
+export const isUserAuth = (onResponse = {}) => {
+  const isAuth = getUser() ? true : false;
+
+  if (!isAuth) {
+    if (typeof onResponse.no === 'function') return onResponse.no()
+    return false;
+  }
+
+  if (typeof onResponse.yes === 'function') return onResponse.yes()
+  return true;
+}
+
+export const signOut = async (data = {}) => {
+  try {
+    await firebase.auth().signOut()
+    return data.onSuccess();
+  } catch (e) {
+    console.log(e)
+    return data.onError();
+  }
+}
+
 export default app;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Image, KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { KEYBOARD_OFFSET, STATUS_BAR_HEIGHT } from '../../common/constants';
 import { signinWithEmailAndPassword } from '../../common/firebase';
 import globalStyles from '../../common/globalStyles';
 import Button from '../../components/Button';
@@ -54,10 +55,10 @@ export default Login = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView keyboardShouldPersistTaps='handled'>
-        <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={20}>
+        <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={KEYBOARD_OFFSET}>
+          <Image style={{ marginVertical: STATUS_BAR_HEIGHT, width: '100%', height: 250 }} source={require('../../assets/login.png')} />
           {/* BODY */}
           <View style={styles.body}>
-            <Image style={{ width: '100%', height: 250 }} source={require('../../assets/login.png')} />
             {/* TITLE */}
             <Text style={styles.title}>
               Login
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   body: {
-    marginTop: globalStyles.marginTop,
+    // marginTop: globalStyles.marginTop,
     marginHorizontal: 40
   },
   title: {

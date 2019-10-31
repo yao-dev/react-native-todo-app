@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Image, KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { KEYBOARD_OFFSET, STATUS_BAR_HEIGHT } from '../../common/constants';
 import { signupWithEmailAndPassword } from '../../common/firebase';
 import globalStyles from '../../common/globalStyles';
 import Button from '../../components/Button';
@@ -46,8 +47,8 @@ export default Signup = (props) => {
     })
   }
 
-  const createAccountLinkProps = {
-    style: styles.createAccountLink,
+  const signinAccountLinkProps = {
+    style: styles.signinAccountLink,
     suppressHighlighting: true,
     onPress: () => props.navigation.navigate('Login')
   }
@@ -55,18 +56,17 @@ export default Signup = (props) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView keyboardShouldPersistTaps='handled'>
-        <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={20}>
+        <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={KEYBOARD_OFFSET}>
+          <Image style={{ marginVertical: STATUS_BAR_HEIGHT, width: '100%', height: 250 }} source={require('../../assets/signup.png')} />
           {/* BODY */}
           <View style={styles.body}>
-            <Image style={{ width: '80%', height: 250, alignSelf: 'center' }} source={require('../../assets/signup.png')} />
             {/* TITLE */}
             <Text style={styles.title}>
               Signup
             </Text>
             <Text style={styles.createAccountText}>
-              Already have an account? <Text {...createAccountLinkProps}>Login to your account</Text>
+              Already have an account? <Text {...signinAccountLinkProps}>Login to your account</Text>
             </Text>
-
             {/* INPUTS */}
             <Form formError={formError}>
               {/* EMAIL */}
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   body: {
-    marginTop: globalStyles.marginTop,
+    // marginTop: globalStyles.marginTop,
     marginHorizontal: 40
   },
   title: {
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   createAccountText: {
     marginBottom: 30,
   },
-  createAccountLink: {
+  signinAccountLink: {
     color: 'red'
   },
   containerInput: {
