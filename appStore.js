@@ -1,18 +1,8 @@
 import { createStore } from 'redux';
 
 export const initialState = {
-  tasks: [{
-    id: 1,
-    name: 'test',
-    categoryId: 1,
-  }],
-  categories: [{
-    id: 1,
-    name: 'test'
-  }, {
-    id: 2,
-    name: 'test'
-  }]
+  tasks: [],
+  categories: []
 }
 
 export const reset = () => initialState;

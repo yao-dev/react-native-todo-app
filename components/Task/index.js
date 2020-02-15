@@ -66,7 +66,7 @@ const Task = (props) => {
         >
           <View
             style={{
-              flex: 0.4,
+              flex: 0.7,
               justifyContent: 'space-between',
               backgroundColor: '#FFF',
               borderTopLeftRadius: 20,

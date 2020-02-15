@@ -14,6 +14,8 @@ export default Login = (props) => {
   const [passwordError, setPasswordError] = useState('');
   const [formError, setFormError] = useState('');
 
+  // useEffect(function() {props.navigation.navigate('Home')}, [])
+
   const getFieldsError = () => {
     let error = {}
     if (!email.trim().length) error.email = 'The field is required';

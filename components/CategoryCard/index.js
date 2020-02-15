@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { FlatList, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, FlatList, ImageBackground, Text, TouchableOpacity, View } from 'react-native';
 import AddModal from '../AddModal';
 import Task from '../Task';
 import container from './container';
 import styles from './styles';
+
+const { width } = Dimensions.get('window');
 
 const CategoryCard = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -15,7 +17,7 @@ const CategoryCard = (props) => {
         style={[styles.componentPaddingLeft, styles.header]}
       >
         <ImageBackground
-          source={require('../../assets/header-1.jpg')}
+          source={{ uri: `https://picsum.photos/200/100`}}
           style={styles.headerImageBackground}
         />
         <Text style={styles.headerTitle}>{props.name}</Text>
